@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: true
+  vars_files:
+    - vault.yml
+
+  tasks:
+  - name: Verify user 'sean' exists
+    user:
+      name: sean
+      comment: Sean Helmus
+      groups: wheel
+      password: "{{ sean_password | password_hash('sha512') }}"
+
+  - name: Allow 'wheel' group to have sudo
+    lineinfile:
+      dest: /etc/sudoers
+      state: present
+      regexp: '^%wheel'
+      line: '%wheel ALL=(ALL) ALL'
+      validate: visudo -cf %s
+
+  - name: Add ssh keys to sean
+    authorized_key:
+      user: sean
+      state: present
+      key: "{{ lookup('file', '/home/sean/.ssh/ssh-endorlan-20210429.pub') }}"
+
+  - name: Change root password to xyz
+    user:
+      name: root
+      password: "{{ root_password | password_hash('sha512') }}"
+
+  - name: Secure SSH
+    template:
+      src: templates/ssh_config.j2
+      dest: /etc/ssh/sshd_config
+      owner: root
+      group: root
+      mode: 0644
+
+- import_playbook: gitlab_install.yml
+- import_playbook: kube_install.yml

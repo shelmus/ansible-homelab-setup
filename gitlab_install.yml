@@ -1,0 +1,28 @@
+---
+- hosts: gitlab
+
+  tasks:
+  - name: Update cache and install requirements
+    apt:
+      name: '{{ item }}'
+      state: present
+      update_cache: true
+    with_items:
+      - curl
+      - openssh-server
+      - ca-certificates
+      - perl
+      - postfix
+
+  - name: Install GitLab repo
+    shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+    args:
+      warn: false
+
+# Set env for url?
+  - name: Install GitLab
+    apt:
+      name: gitlab-ee
+      state: present
+    environment:
+      '{{ ext_url }}'
