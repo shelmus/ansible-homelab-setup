@@ -8,9 +8,9 @@
   - name: Verify user 'sean' exists
     user:
       name: sean
-      comment: Sean Helmus
+      comment: "{{ primary_username }}"
       groups: wheel
-      password: "{{ sean_password | password_hash('sha512') }}"
+      password: "{{ primary_username_pw | password_hash('sha512') }}"
 
   - name: Allow 'wheel' group to have sudo
     lineinfile:
@@ -24,7 +24,7 @@
     authorized_key:
       user: sean
       state: present
-      key: "{{ lookup('file', '/home/sean/.ssh/ssh-endorlan-20210429.pub') }}"
+      key: "{{ public_key }}"
 
   - name: Change root password to xyz
     user:
