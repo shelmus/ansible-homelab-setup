@@ -3,6 +3,7 @@
   become: true
   vars_files:
     - vault.yml
+    - defaults/main.yml
 
   tasks:
   - name: Verify user 'sean' exists
