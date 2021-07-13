@@ -4,7 +4,7 @@
 
   tasks:
   - name: Verify nginx is installed
-    packages:
+    package:
       name: 'nginx'
       state: present
 
