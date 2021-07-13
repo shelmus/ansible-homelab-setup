@@ -1,6 +1,7 @@
 ---
 - hosts: nginx
   become: true
+  become_method: sudo su -
 
   tasks:
   - name: Verify nginx is installed
