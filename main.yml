@@ -12,6 +12,15 @@
       comment: "{{ primary_username }}"
       groups: wheel
       password: "{{ primary_username_pw | password_hash('sha512') }}"
+    when: ansible_distribution == 'Arch Linux'
+
+  - name: Verify user 'sean' exists
+    user:
+      name: sean
+      comment: "{{ primary_username }}"
+      groups: sudo
+      password: "{{ primary_username_pw | password_hash('sha512') }}"
+    when: ansible_distribution == 'Debian'
 
   - name: Allow 'wheel' group to have sudo
     lineinfile:
@@ -20,6 +29,7 @@
       regexp: '^%wheel'
       line: '%wheel ALL=(ALL) ALL'
       validate: visudo -cf %s
+    when: ansible_distribution == 'Arch Linux'
 
   - name: Add ssh keys to sean
     authorized_key:
