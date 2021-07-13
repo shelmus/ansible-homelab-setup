@@ -1,0 +1,59 @@
+---
+- hosts: nginx
+  become: yes
+
+  tasks:
+  - name: Verify nginx is installed
+    packages:
+      name: 'nginx'
+      state: present
+
+  - name: Update default nginx config
+    template:
+      src: templates/default_nginx_config.j2
+      dest: /etc/nginx/nginx.conf
+
+  - name: Generate dhparam
+    community.crypto.openssl_dhparam:
+      path: /etc/ssl/nginx-dhparams.pem
+
+  - name: Create dir for static page
+    file:
+      path: /var/www/static_web/
+      state: present
+
+  - name: Copy default index
+    copy:
+      src: files/index.html
+      dest: /var/www/static_web/index.html
+      owner: http
+      group: http
+      mode: 0644
+
+  - name: Configure sites (nginx conf.d)
+    template:
+      src: "templates/domain_nginx_config.j2"
+      dest: "/etc/nginx/conf.d/{{ item.value.url }}.conf"
+    with_items: "{{ domains }}"
+
+  - name: Flush handlers
+    meta: flush_handlers
+
+  - name: Run certbot update against nginx
+    shell: certbot --nginx -d "{{ item.value.url }}"
+    args:
+      creates: "/etc/letsencrypt/live/{{ item.value.url }}"
+    with_items: "{{ domains }}"
+
+  - name: Add cron for certbot auto updates
+    cron:
+      name: "Update certs"
+      minute: "0"
+      hour: "12"
+      job: "/usr/bin/certbot renew --quiet"
+
+  handlers:
+  - name: reload nginx
+    service:
+      name: "nginx"
+      state: reloaded

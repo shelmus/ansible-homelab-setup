@@ -40,7 +40,7 @@
       mode: 0644
 
 - import_playbook: nginx_proxy.yml
-- import_playbook: database_setup.yml
-- import_playbook: nameserver_setup.yml
+# - import_playbook: database_setup.yml
+# - import_playbook: nameserver_setup.yml
 - import_playbook: gitlab_install.yml
 - import_playbook: kube_install.yml
