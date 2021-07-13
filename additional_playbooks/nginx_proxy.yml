@@ -1,6 +1,6 @@
 ---
 - hosts: nginx
-  become: yes
+  become: true
 
   tasks:
   - name: Verify nginx is installed
