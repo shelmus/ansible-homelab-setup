@@ -1,4 +1,1 @@
 ---
-# Disable root ssh login. Available options: "yes" "no"
-disable_root_ssh: "yes"
-primary_username: "sean"

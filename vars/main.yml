@@ -1,0 +1,16 @@
+---
+# SSH settings for role
+security_ssh_password_authentication: "yes"
+security_ssh_permit_root_login: "no"
+security_ssh_permit_empty_password: "no"
+security_ssh_challenge_response_auth: "no"
+security_ssh_gss_api_authentication: "no"
+security_ssh_x11_forwarding: "no"
+security_sudoers_passworded: ['sean']
+# Other sec things
+security_autoupdate_enabled: true
+security_autoupdate_reboot: false
+security_autoupdate_mail_to: "ops@endorlan.net"
+security_autoupdate_mail_on_error: true
+# fail2ban
+security_fail2ban_enabled: false

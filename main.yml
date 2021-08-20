@@ -4,52 +4,12 @@
   vars_files:
     - vault.yml
     - defaults/main.yml
+    - vars/main.yml
 
-#   tasks:
-#   - name: Verify user 'sean' exists
-#     user:
-#       name: sean
-#       comment: "{{ primary_username }}"
-#       groups: wheel
-#       password: "{{ primary_username_pw | password_hash('sha512') }}"
-#     when: ansible_distribution == 'Arch Linux'
+  roles:
+    - geerlingguy.security
 
-#   - name: Verify user 'sean' exists
-#     user:
-#       name: sean
-#       comment: "{{ primary_username }}"
-#       groups: sudo
-#       password: "{{ primary_username_pw | password_hash('sha512') }}"
-#     when: ansible_distribution == 'Debian'
-
-#   - name: Allow 'wheel' group to have sudo
-#     lineinfile:
-#       dest: /etc/sudoers
-#       state: present
-#       regexp: '^%wheel'
-#       line: '%wheel ALL=(ALL) ALL'
-#       validate: visudo -cf %s
-#     when: ansible_distribution == 'Arch Linux'
-
-#   - name: Add ssh keys to sean
-#     authorized_key:
-#       user: sean
-#       state: present
-#       key: "{{ public_key }}"
-
-#   - name: Change root password
-#     user:
-#       name: root
-#       password: "{{ root_password | password_hash('sha512') }}"
-
-#   - name: Secure SSH
-#     template:
-#       src: templates/ssh_config.j2
-#       dest: /etc/ssh/sshd_config
-#       owner: root
-#       group: root
-#       mode: 0644
-
+  tasks:
 # - import_playbook: additional_playbooks/nginx_proxy.yml
 # - import_playbook: database_setup.yml
 # - import_playbook: nameserver_setup.yml
