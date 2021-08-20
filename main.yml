@@ -10,8 +10,9 @@
     - geerlingguy.security
 
   tasks:
-# - import_playbook: additional_playbooks/nginx_proxy.yml
+# - import_playbook: prov_vms.yml
+# - import_playbook: nginx_proxy.yml
 # - import_playbook: database_setup.yml
 # - import_playbook: nameserver_setup.yml
-# - import_playbook: additional_playbooks/gitlab_install.yml
-- import_playbook: additional_playbooks/kube_install.yml
+# - import_playbook: gitlab_install.yml
+- import_playbook: kube_install.yml
