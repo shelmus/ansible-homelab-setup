@@ -1,18 +1,74 @@
 ---
-- hosts: all
+- hosts: kube,others
   become: true
   vars_files:
     - vault.yml
     - defaults/main.yml
     - vars/main.yml
+    - vars/vm_details.yml
 
   roles:
     - geerlingguy.security
 
   tasks:
-# - import_playbook: prov_vms.yml
-# - import_playbook: nginx_proxy.yml
-# - import_playbook: database_setup.yml
-# - import_playbook: nameserver_setup.yml
+  # Remove dhcp as its setup by deafult on the debian 10 machines
+    - name: Disable DHCP on Debain10 template
+      lineinfile:
+        path: /etc/network/interfaces
+        regexp: "dhcp$"
+        state: absent
+      when: ansible_distribution == "Debian"
+
+    - name: Remove cloud-init preserve_hostname
+      lineinfile:
+        path: /etc/cloud/cloud.cfg
+        regexp: "^preserve_hostname"
+        line: "preserve_hostname: true"
+        state: present
+
+    - name: Remove /etc/hosts manage from cloudinit
+      lineinfile:
+        path: /etc/cloud/cloud.cfg
+        regexp: "update_etc_hosts$"
+        state: absent
+
+    - name: Remove auto network updates
+      lineinfile:
+        path: /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+        regexp: "^network:"
+        line: "network: {config: disabled}"
+        state: present
+        create: true
+
+    - name: Verify hostnames with full FQDN
+      ansible.builtin.hostname:
+        name: '{{ inventory_hostname }}'
+      register: name_change
+
+    - name: Install qemu-guest-utils
+      package:
+        name: qemu-guest-agent
+        state: present
+    
+    - name: Install preffered packages
+      package:
+        name: '{{ item }}'
+        state: present
+      with_items:
+        - vim
+        - rsync
+        - selinux-basics
+        - selinux-policy-default
+
+    - name: Reboot to make network changes stick
+      ansible.builtin.reboot:
+        reboot_timeout: 180
+      when: name_change.changed
+
+# - import_playbook: ipa_clients.yml
+# - import_playbook: kube_install.yml
+# - import_playbook: mailcow_install.yaml
+# - import_playbook: wireguard_install.yml
+# - import_playbook: nginx_proxy_install.yml
+# - import_playbook: database_install.yml
 # - import_playbook: gitlab_install.yml
-- import_playbook: kube_install.yml

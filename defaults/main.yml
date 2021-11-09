@@ -1,1 +1,5 @@
 ---
+mount_src: 10.0.0.11:/srv/nfs/vmdata
+mount_path: /data
+
+certbot_email: esane.demay@gmail.com

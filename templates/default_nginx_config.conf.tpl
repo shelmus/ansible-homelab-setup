@@ -1,4 +1,4 @@
-user http;
+user www-data;
 worker_processes  2;
 
 #error_log  logs/error.log;
@@ -14,6 +14,7 @@ events {
 
 
 http {
+    include       conf.d/*;
     include       mime.types;
     default_type  application/octet-stream;
 
@@ -31,7 +32,7 @@ http {
 
     #gzip  on;
 
-    server {                                                                                                                                                                                                                                                         [29/124]
+    server {
         listen       80;
         server_name  localhost;
 

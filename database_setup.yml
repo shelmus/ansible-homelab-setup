@@ -1,0 +1,2 @@
+---
+- hosts: db1.lab.endorlan.net

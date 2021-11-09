@@ -1,13 +1,26 @@
 [kube]
-kube-ctrl1 ansible_host=10.0.0.20 ansible_user=sean kubernetes_role=master
-kube-ctrl2 ansible_host=10.0.0.21 ansible_user=sean kubernetes_role=master
-kube-node1 ansible_host=10.0.0.22 ansible_user=sean kubernetes_role=node
-kube-node2 ansible_host=10.0.0.23 ansible_user=sean kubernetes_role=node
-kube-node3 ansible_host=10.0.0.24 ansible_user=sean kubernetes_role=node
-kube-node4 ansible_host=10.0.0.25 ansible_user=sean kubernetes_role=node
+kube-ctrl1.lab.endorlan.net ansible_host=10.0.0.20 ansible_user=link kubernetes_role=master
+kube-ctrl2.lab.endorlan.net ansible_host=10.0.0.21 ansible_user=link kubernetes_role=master
+kube-node1.lab.endorlan.net ansible_host=10.0.0.22 ansible_user=link kubernetes_role=node
+kube-node2.lab.endorlan.net ansible_host=10.0.0.23 ansible_user=link kubernetes_role=node
 
-[git]
-gitlab ansible_host=10.0.0.26 ansible_user=sean
+[idm]
+idm1.lab.endorlan.net ansible_host=10.0.0.27 ansible_user=link
 
-[db]
-db1 ansible_host=10.0.0.27 ansible_user=sean
+[others]
+gitlab1.lab.endorlan.net ansible_host=10.0.0.24 ansible_user=link
+db1.lab.endorlan.net ansible_host=10.0.0.25 ansible_user=link
+jarvis.lab.endorlan.net ansible_host=10.0.0.26 ansible_user=link
+web1.lab.endorlan.net ansible_host=10.0.0.29 ansible_user=link
+vpn1.lab.endorlan.net ansible_host=10.0.0.30 ansible_user=link
+dev1.lab.endorlan.net ansible_host=10.0.0.31 ansible_user=link
+sync1.lab.endorlan.net ansible_host=10.0.0.32 ansible_user=link
+
+[mail]
+mail.endorlan.net ansible_host=10.0.0.33 ansible_user=link
+
+[physical]
+yoda.lab.endorlan.net ansible_host=10.0.0.11 ansible_user=link
+gandalf.lab.endorlan.net ansible_host=10.0.0.4 ansible_user=link
+pippin.lab.endorlan.net ansible_host=10.0.0.6 ansible_user=link
+yeti.lab.endorlan.net ansible_host=10.0.0.3 ansible_user=link

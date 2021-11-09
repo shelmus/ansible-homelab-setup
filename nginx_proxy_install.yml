@@ -1,0 +1,86 @@
+---
+- hosts: web1.idm.endorlan.net
+  become: true
+
+  vars:
+    - certbot_create_if_missing: true
+    - certbot_admin_email: '{{ certbot_email }}'
+    - certbot_certs:
+      - email: '{{ certbot_email }}'
+        domains:
+          - git.endorlan.net
+        domains:
+          - endorlan.net
+          - www.endorlan.net
+
+  vars_files:
+    - defaults/main.yml
+
+  tasks:
+  - name: Verify nginx is installed
+    package:
+      name: 'nginx'
+      state: present
+
+  - name: Default nginx config
+    template:
+      src: templates/default_nginx_config.conf.tpl
+      dest: /etc/nginx/nginx.conf
+
+  - name: Generate dhparam
+    community.crypto.openssl_dhparam:
+      path: /etc/ssl/nginx-dhparams.pem
+
+  - name: Create dir for static page
+    file:
+      path: /var/www/html/root_endorlan_net/
+      owner: www-data
+      group: www-data
+      state: directory
+
+  - name: Copy default index
+    copy:
+      src: files/index.html
+      dest: /var/www/html/root_endorlan_net/index.html
+      owner: www-data
+      group: www-data
+      mode: 0644
+
+  - name: Flush handlers
+    meta: flush_handlers
+
+  - name: Running certbot role
+    include_role:
+        name: geerlingguy.certbot
+
+  - name: Configure sites (www.endorlan.net)
+    template:
+      src: "templates/endorlan-net-root.conf.tpl"
+      dest: "/etc/nginx/conf.d/root_endorlan_net.conf"
+
+  - name: Configure sites (git.endorlan.net)
+    template:
+      src: "templates/endorlan-net-git.conf.tpl"
+      dest: "/etc/nginx/conf.d/git_endorlan_net.conf"
+
+  # - name: Configure sites (www.endorsystems.com)
+  #   template:
+  #     src: "templates/domain_nginx_config.j2"
+  #     dest: "/etc/nginx/conf.d/{{ item.value.url }}.conf"
+  #   with_items: "{{ domains }}"
+
+  - name: Flush handlers
+    meta: flush_handlers
+
+  - name: Add cron for certbot auto updates
+    cron:
+      name: "Update certs"
+      minute: "0"
+      hour: "12"
+      job: "/usr/bin/certbot renew --quiet"
+
+  handlers:
+  - name: reload nginx
+    service:
+      name: "nginx"
+      state: reloaded

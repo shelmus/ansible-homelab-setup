@@ -1,0 +1,106 @@
+---
+# Containers
+containers:
+  pihole:
+    name:
+    desc: "pihole instance"
+    disk:
+    ip:
+    mask:
+    gw:
+    prox_node: "gandalf"
+  guacd:
+    name:
+    desc: "Guacamole server"
+    disk:
+    ip:
+    mask:
+    gw:
+    prox_node: "pippin"
+
+# VM's
+vms:
+  watney:
+    name:
+    desc: "VDI for Linux using i3 desktop"
+    disk:
+    ip:
+    mask:
+    gw:
+    prox_node: "gandalf"
+    vm_hostname: "watney.endorlan.net"
+  gitlab:
+    name: "gitlab"
+    desc: "GitLab"
+    disk:
+    ip:
+    mask:
+    gw:
+    prox_node: "gandalf"
+    vm_hostname: "git.endorlan.net"
+  thor:
+    name: "thor"
+    desc: "Misc Debian 10 machine"
+    disk:
+    ip:
+    mask:
+    gw:
+    prox_node: "pippin"
+    vm_hostname:
+  navi:
+    name: "navi"
+    desc: "Nginx Reverse proxy and certbot for endorlan.net"
+    disk:
+    ip:
+    mask:
+    gw:
+    prox_node: "pippin"
+  database:
+    vm_name: "db1"
+    vm_desc: "Multi database for use in the network"
+    disk:
+    vm_onboot: yes
+    vm_memory: 
+    vm_storage: vmfs1:50
+    vm_cores:
+    vm_net:
+    vm_ip:
+    vm_user:
+    vm_pass:
+    vm_dns:
+    source_clone:
+    prox_node: "gandalf"
+# Lab stuff
+  kube-ctrl1:
+    name: "kube-ctrl1"
+    desc: "Kube Controller"
+    disk: "100G"
+    ip: "10.0.0.20"
+    mask: "255.255.254.0"
+    gw: "10.0.0.1"
+    prox_node: "gandalf"
+  kube-ctrl2:
+    name: "kube-ctrl2"
+    desc: "Kube Controller"
+    disk: "100G"
+    ip: "10.0.0.21"
+    mask: "255.255.254.0"
+    gw: "10.0.0.1"
+    prox_node: "pippin"
+  kube-node1:
+    name: "kube-node1"
+    desc: "Kube worker node"
+    disk: "100G"
+    ip: "10.0.0.22"
+    mask: "255.255.254.0"
+    gw: "10.0.0.1"
+    prox_node: "gandalf"
+  kube-node2:
+    name: "kube-node2"
+    desc: "Kube worker node"
+    disk: "100G"
+    ip: "10.0.0.23"
+    mask: "255.255.254.0"
+    gw: "10.0.0.1"
+    prox_node: "pippin"
+

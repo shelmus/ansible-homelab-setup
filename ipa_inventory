@@ -1,0 +1,32 @@
+[ipaserver]
+idm1.lab.endorlan.net ansible_host=10.0.0.27 ansible_user=link
+
+[ipaserver:vars]
+ipaadmin_password={{ ipa_admin_pass }}
+ipadm_password={{ ipa_dm_pass }}
+ipaserver_domain=lab.endorlan.net
+ipaserver_realm=LAB.ENDORLAN.NET
+ipaserver_setup_dns=yes
+ipaserver_auto_forwarders=yes
+
+[ipareplicas]
+
+[ipareplicas:vars]
+
+[ipaclients]
+gitlab1.lab.endorlan.net ansible_host=10.0.0.24 ansible_user=link
+db1.lab.endorlan.net ansible_host=10.0.0.25 ansible_user=link
+jarvis.lab.endorlan.net ansible_host=10.0.0.26 ansible_user=link
+web1.lab.endorlan.net ansible_host=10.0.0.29 ansible_user=link
+vpn1.lab.endorlan.net ansible_host=10.0.0.30 ansible_user=link
+dev1.lab.endorlan.net ansible_host=10.0.0.31 ansible_user=link
+sync1.lab.endorlan.net ansible_host=10.0.0.32 ansible_user=link
+mail.lab.endorlan.net ansible_host=10.0.0.33 ansible_user=link
+
+[ipaclients:vars]
+ipaadmin_password={{ ipa_admin_pass }}
+ipaserver_domain=lab.endorlan.net
+ipaserver_realm=LAB.ENDORLAN.NET
+ipaclient_servers=idm1.lab.endorlan.net
+ipasssd_enable_dns_updates=true
+ipaclient_mkhomedir=true

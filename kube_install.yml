@@ -1,9 +1,7 @@
 ---
 - hosts: kube
-
+  become: true
   vars:
-    kubernetes_enable_web_ui: true
-    kubernetes_web_ui_manifest_file: https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
     kubernetes_allow_pods_on_master: true
     kubernetes_pod_network:
       cni: 'flannel'
