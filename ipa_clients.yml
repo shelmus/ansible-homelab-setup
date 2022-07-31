@@ -7,7 +7,7 @@
     - ipaclient_mkhomedir: true
     - ipaadmin_principal: admin
     - ipaadmin_password: '{{ ipa_admin_pass }}'
-    - ipaclient_servers: idm1.lab.endorlan.net
+    - ipaclient_servers: idm.lab.endorlan.net
     - ipasssd_enable_dns_updates: true
 
   collections:
@@ -21,7 +21,7 @@
       lineinfile:
         path: /etc/network/interfaces.d/50-cloud-init
         regexp: 'dns-nameservers'
-        line: '    dns-nameservers 10.0.0.27'
+        line: '    dns-nameservers 10.0.0.9'
         state: present
 
     - name: change dns-search to lab
@@ -36,27 +36,3 @@
       ansible.builtin.reboot:
         reboot_timeout: 180
       when: dns_updated.changed
-
-
-  # tasks:
-  #   - name: Install IPA client packages
-  #     package:
-  #       name: freeipa-client
-  #       state: present
-    
-  #   - name: Setup IPA client
-  #     community.general.ipa_host:
-  #       name: '{{ inventory_hostname }}'
-  #       description: '{{ inventory_hostname }}'
-  #       ip_address: '{{ ansible_host }}'
-  #       ns_host_location: HomeLab
-  #       ns_os_version: '{{ hostvars[inventory_hostname].ansible_distribution }}'
-  #       ns_hardware_platform: VirtualMachine
-  #       mac_address:
-  #         - '{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}'
-  #       state: present
-  #       ipa_host: idm1.lab.endorlan.net
-  #       ipa_user: admin
-  #       ipa_pass: '{{ ipa_admin_pass }}'
-  #       validate_certs: false
-  #       random_password: true
