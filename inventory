@@ -1,23 +1,21 @@
 [kube]
-kube-ctrl1.lab.endorlan.net ansible_host=10.0.0.20 ansible_user=link kubernetes_role=master
-kube-ctrl2.lab.endorlan.net ansible_host=10.0.0.21 ansible_user=link kubernetes_role=master
-kube-node1.lab.endorlan.net ansible_host=10.0.0.22 ansible_user=link kubernetes_role=node
-kube-node2.lab.endorlan.net ansible_host=10.0.0.23 ansible_user=link kubernetes_role=node
+kube1.lab.endorlan.net ansible_host=10.0.0.20 ansible_user=link kubernetes_role=master
+kube2.lab.endorlan.net ansible_host=10.0.0.21 ansible_user=link kubernetes_role=node
+kube3.lab.endorlan.net ansible_host=10.0.0.22 ansible_user=link kubernetes_role=node
 
 [idm]
-idm1.lab.endorlan.net ansible_host=10.0.0.27 ansible_user=link
+idm.lab.endorlan.net ansible_host=10.0.0.9 ansible_user=link
 
 [others]
-gitlab1.lab.endorlan.net ansible_host=10.0.0.24 ansible_user=link
-db1.lab.endorlan.net ansible_host=10.0.0.25 ansible_user=link
-jarvis.lab.endorlan.net ansible_host=10.0.0.26 ansible_user=link
-web1.lab.endorlan.net ansible_host=10.0.0.29 ansible_user=link
-vpn1.lab.endorlan.net ansible_host=10.0.0.30 ansible_user=link
-dev1.lab.endorlan.net ansible_host=10.0.0.31 ansible_user=link
-sync1.lab.endorlan.net ansible_host=10.0.0.32 ansible_user=link
-
-[mail]
-mail.endorlan.net ansible_host=10.0.0.33 ansible_user=link
+kube1.lab.endorlan.net ansible_host=10.0.0.20 ansible_user=link
+kube2.lab.endorlan.net ansible_host=10.0.0.21 ansible_user=link
+kube3.lab.endorlan.net ansible_host=10.0.0.22 ansible_user=link
+gitlab.lab.endorlan.net ansible_host=10.0.0.8 ansible_user=link
+jarvis.lab.endorlan.net ansible_host=10.0.0.10 ansible_user=link
+docker.lab.endorlan.net ansible_host=10.0.0.13 ansible_user=link
+mail.lab.endorlan.net ansible_host=10.0.0.14 ansible_user=link
+web1.lab.endorlan.net ansible_host=10.0.0.15 ansible_user=link
+minecraft.lab.endorlan.net ansible_host=10.0.0.17 ansible_user=link
 
 [physical]
 yoda.lab.endorlan.net ansible_host=10.0.0.11 ansible_user=link
